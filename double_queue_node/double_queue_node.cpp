@@ -2,9 +2,9 @@
 
 dequeue_node::dequeue_node(dequeue_node *previous) : prev(previous) {}
 
-void dequeue_node::copy_arr(
-    std::map<uint32_t, uint32_t> &frag_arr_vnode,
-    std::pair<unsigned int, unsigned int> &look_up_res, uint32_t content_s) {
+void dequeue_node::copy_arr(std::map<uint32_t, uint32_t> &frag_arr_vnode,
+                            std::pair<unsigned int, unsigned int> &look_up_res,
+                            uint32_t content_s) {
   content_size = content_s;
   virtual_node = look_up_res.first;
   real_node = look_up_res.second;
@@ -30,7 +30,8 @@ void dequeue_node::copy_arr(
   std::copy(frag_arr_rnode.begin(), frag_arr_rnode.end(), arr_rnode.begin());
 }
 
-void dequeue_node::copy_arr_rnode(std::map<uint32_t, uint32_t> &frag_arr_rnode) {
+void dequeue_node::copy_arr_rnode(
+    std::map<uint32_t, uint32_t> &frag_arr_rnode) {
   arr_rnode.clear();
   size_rnode = frag_arr_rnode.size();
   arr_rnode.resize(size_rnode);

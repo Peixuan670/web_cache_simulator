@@ -29,7 +29,6 @@ public:
   std::map<std::string, unsigned int>
       fileID_rnode_map; // Peixuan 10262020: File ID to real node map
 
-
   consistent_hash();
 
   ~consistent_hash();

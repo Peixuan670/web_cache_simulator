@@ -59,8 +59,7 @@ consistent_hash::look_up_simple(const std::string &content) {
   auto hash_position = SimpleHash(content.c_str(), HASH_LEN);
   auto virtual_node_index = find_nearest_node_simple(hash_position);
   virtual_node_index++;
-  if (virtual_node_index >=
-      sorted_node_hash_list.size()) { // cross the zero
+  if (virtual_node_index >= sorted_node_hash_list.size()) { // cross the zero
     virtual_node_index = 0;
   }
   return std::pair<unsigned int, unsigned int>(
@@ -130,18 +129,16 @@ consistent_hash::look_up(const std::string &content) {
   auto hash_position = MurMurHash(content.c_str(), content.length());
   auto virtual_node_index = find_nearest_node(hash_position);
   virtual_node_index++;
-  if (virtual_node_index >=
-      sorted_node_hash_list.size()) { // cross the zero
+  if (virtual_node_index >= sorted_node_hash_list.size()) { // cross the zero
     virtual_node_index = 0;
   }
 
   // Peixuan 10262020: File : vnode and rnode map:
-  
+
   fileID_vnode_map[content] = virtual_node_index;
   fileID_rnode_map[content] =
       virtual_node_map.find(sorted_node_hash_list[virtual_node_index])
           ->second.cache_index;
-
 
   return std::pair<unsigned int, unsigned int>(
       virtual_node_index,
@@ -175,14 +172,12 @@ void consistent_hash::add_real_node(std::string ip,
       // double ratio = 1/3;
       // tmp_hash = HASH_LEN*ratio*vir_node_num + HASH_LEN*ratio;    // 09262020
       // Peixuan : simple hash
-    } while (virtual_node_map.find(tmp_hash) !=
-             virtual_node_map.end());
+    } while (virtual_node_map.find(tmp_hash) != virtual_node_map.end());
     vir_node_num++;
     virtual_node_map[tmp_hash] =
         virtual_node(tmp_ip, tmp_hash, real_node_sum - 1);
     sorted_node_hash_list.push_back(tmp_hash);
-    sort(sorted_node_hash_list.begin(),
-         sorted_node_hash_list.end());
+    sort(sorted_node_hash_list.begin(), sorted_node_hash_list.end());
     unsigned int id = find_nearest_node(tmp_hash);
     unsigned int next_id = id + 1;
     if (next_id >= sorted_node_hash_list.size()) { // cross the zero
@@ -247,8 +242,7 @@ void consistent_hash::add_real_node_assign(
     // std::cout << "[UID: ]\t" << starting_id+assigned_vnode << std::endl;
     // // 10122020 Peixuan vnode debug
 
-    unsigned int hash_value =
-        uid_map_hash_value[starting_id + assigned_vnode];
+    unsigned int hash_value = uid_map_hash_value[starting_id + assigned_vnode];
 
     // std::cout << "[UID = ]\t" << virtual_node_map[hash_value].uid <<
     // std::endl; // 10122020 Peixuan vnode debug
@@ -258,9 +252,9 @@ void consistent_hash::add_real_node_assign(
     // Peixuan vnode debug
 
     virtual_node_map[hash_value].SetIP(tmp_ip); // 10102020 Peixuan :
-                                                      // Update the tmp_ip and
-                                                      // real node index when
-                                                      // assigning the vnode
+                                                // Update the tmp_ip and
+                                                // real node index when
+                                                // assigning the vnode
 
     virtual_node_map[hash_value].SetCacheIndex(
         real_node_sum - 1); // 10102020 Peixuan : Update the tmp_ip and real
@@ -328,8 +322,7 @@ void consistent_hash::initial_virtual_node(
 
     sorted_node_hash_list.push_back(tmp_hash);
 
-    sort(sorted_node_hash_list.begin(),
-         sorted_node_hash_list.end());
+    sort(sorted_node_hash_list.begin(), sorted_node_hash_list.end());
 
     unsigned int id = find_nearest_node(tmp_hash);
 
